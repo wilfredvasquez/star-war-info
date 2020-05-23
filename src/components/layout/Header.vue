@@ -18,18 +18,18 @@
       nav.tabs.is-boxed.is-fullwidth
         .container
           ul
-            li.is-active
-              a {{ $t('people') }}
-            li
-              a {{ $t('planets') }}
-            li
-              a {{ $t('films') }}
-            li
-              a {{ $t('species') }}
-            li
-              a {{ $t('starships') }}
-            li
-              a {{ $t('vehicles') }}
+            li(:class="this.$route.meta.is_people ? 'is-active': ''")
+              router-link(:to="{ name: 'home' }") {{ $t('people') }}
+            li(:class="this.$route.meta.is_planets ? 'is-active': ''")
+              router-link(:to="{ name: 'planets' }") {{ $t('planets') }}
+            li(:class="this.$route.meta.is_films ? 'is-active': ''")
+              router-link(:to="{ name: 'films' }") {{ $t('films') }}
+            li(:class="this.$route.meta.is_species ? 'is-active': ''")
+              router-link(:to="{ name: 'species' }") {{ $t('species') }}
+            li(:class="this.$route.meta.is_starships ? 'is-active': ''")
+              router-link(:to="{ name: 'starships' }") {{ $t('starships') }}
+            li(:class="this.$route.meta.is_vehicles ? 'is-active': ''")
+              router-link(:to="{ name: 'vehicles' }") {{ $t('vehicles') }}
 </template>
 
 <script>
@@ -38,7 +38,7 @@ export default {
     selectLang (lang) {
       this.$i18n.locale = lang
     }
-  }
+  },
 }
 </script>
 

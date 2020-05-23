@@ -6,22 +6,22 @@
       section.section(v-show="!isLoading")
         .container.results
           .columns.is-multiline.is-centered
-            .column.is-one-quarter(v-for="(p, index) in people")
-              people-basic-info(:person="p", :id="index")
+            .column.is-one-quarter(v-for="(p, index) in planets")
+              planet-basic-info(:planet="p", :id="index")
           pagination(:pages="pages" @change-current-page="changePage")
 </template>
 
 <script>
-import { getAllPeople } from '@/services/people'
+import { getAllPlanets } from '@/services/planets'
 import Loader from '@/components/shared/Loading.vue'
 import Notification from '@/components/shared/Notification.vue'
 import Pagination from '@/components/shared/Pagination.vue'
-import PeopleBasicInfo from '@/components/views/people/PeopleBasicInfo'
+import PlanetBasicInfo from '@/components/views/planets/PlanetBasicInfo'
 
 export default {
   components: {
     Loader,
-    PeopleBasicInfo,
+    PlanetBasicInfo,
     Pagination,
     Notification
   },
@@ -29,7 +29,7 @@ export default {
     return {
       isLoading: false,
       showNotification: false,
-      people: null,
+      planets: null,
       pages: {
         nextPage: null,
         previousPage: null,
@@ -38,7 +38,7 @@ export default {
     }
   },
   created () {
-    this.getListPeople()
+    this.getListPlanets()
   },
   watch: {
     showNotification () {
@@ -58,18 +58,18 @@ export default {
       this.pages.currentPage = currentPage
       this.pages.previousPage = currentPage - 1
       this.pages.nextPage = currentPage + 1
-      this.getListPeople()
+      this.getListPlanets()
     },
-    getListPeople () {
+    getListPlanets() {
       this.isLoading = true
-      getAllPeople(this.pages.currentPage)
+      getAllPlanets(this.pages.currentPage)
       .then( res => {
-        this.people = res.data.results
+        this.planets = res.data.results
         this.pages.nextPage = this.getPage(res.data.next)
         this.pages.previousPage = this.getPage(res.data.previous)
       })
       .catch(() => {
-        this.people = null
+        this.planets = null
         this.showNotification = true
       })
       .finally(() => {

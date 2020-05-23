@@ -5,33 +5,34 @@
         .media-content.has-text-centered
           p.title.is-6
             strong {{ person.name }}
-          p.is-6 {{ $t('gender') }}: {{ person.gender }}
+          p.is-6 {{ $t('gender') }}: {{ gender | capitalize }}
           p.is-6 {{ $t('birth_year') }}: {{ person.birth_year  }}
 
       .content
         button.button.is-dark.has-text-centered
-            span(@click="goToTrack()") {{ $t('view_detail') }}
+            span(@click="goToPerson()") {{ $t('view_detail') }}
 </template>
 
 <script>
 export default {
   props: {
-    person: { type: Object, required: true }
+    person: { type: Object, required: true },
+    id: {required: true}
   },
 
   methods: {
     goToPerson () {
-      console.log("Ver detalles")
-
+      const id = this.id + 1
+      this.$router.push({ name: 'people_detail', params: { id } })
     }
   },
-
   computed: {
-      typeGender () {
-          if (this.person.gender === "male") { return 0 }
-          else if (this.person.gender === "female") { return 1 }
-          else { return 2 }
+    gender () {
+      if(this.person.gender === 'n/a'){
+        return this.person.gender.toUpperCase()
       }
+      return this.person.gender
+    }
   }
 }
 </script>

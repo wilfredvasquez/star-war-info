@@ -8,8 +8,6 @@
         position: relative;
         width: 80px;
         height: 80px;
-        margin-top: 10em;
-        margin-bottom: 10em;
     }
     .lds-hourglass:after {
         content: " ";

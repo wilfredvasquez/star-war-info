@@ -3,7 +3,7 @@
     .columns
       .column.is-5.is-offset-4
         .notification.is-danger
-          slot(name="body") Algo anduvo mal 🙁
+          slot(name="body") {{ $t('message_notification') }}
 </template>
 
 <style lang="scss" scoped>

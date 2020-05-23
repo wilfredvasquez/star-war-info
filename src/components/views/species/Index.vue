@@ -6,22 +6,22 @@
       section.section(v-show="!isLoading")
         .container.results
           .columns.is-multiline.is-centered
-            .column.is-one-quarter(v-for="(p, index) in people")
-              people-basic-info(:person="p", :id="index")
+            .column.is-one-quarter(v-for="(s, index) in species")
+              species-basic-info(:specie="s", :id="index")
           pagination(:pages="pages" @change-current-page="changePage")
 </template>
 
 <script>
-import { getAllPeople } from '@/services/people'
+import { getAllSpecies } from '@/services/species'
 import Loader from '@/components/shared/Loading.vue'
 import Notification from '@/components/shared/Notification.vue'
 import Pagination from '@/components/shared/Pagination.vue'
-import PeopleBasicInfo from '@/components/views/people/PeopleBasicInfo'
+import SpeciesBasicInfo from '@/components/views/species/SpeciesBasicInfo'
 
 export default {
   components: {
     Loader,
-    PeopleBasicInfo,
+    SpeciesBasicInfo,
     Pagination,
     Notification
   },
@@ -29,7 +29,7 @@ export default {
     return {
       isLoading: false,
       showNotification: false,
-      people: null,
+      species: null,
       pages: {
         nextPage: null,
         previousPage: null,
@@ -38,7 +38,7 @@ export default {
     }
   },
   created () {
-    this.getListPeople()
+    this.getListSpecies()
   },
   watch: {
     showNotification () {
@@ -58,18 +58,18 @@ export default {
       this.pages.currentPage = currentPage
       this.pages.previousPage = currentPage - 1
       this.pages.nextPage = currentPage + 1
-      this.getListPeople()
+      this.getListSpecies()
     },
-    getListPeople () {
+    getListSpecies() {
       this.isLoading = true
-      getAllPeople(this.pages.currentPage)
+      getAllSpecies(this.pages.currentPage)
       .then( res => {
-        this.people = res.data.results
+        this.species = res.data.results
         this.pages.nextPage = this.getPage(res.data.next)
         this.pages.previousPage = this.getPage(res.data.previous)
       })
       .catch(() => {
-        this.people = null
+        this.species = null
         this.showNotification = true
       })
       .finally(() => {

@@ -9,6 +9,12 @@ function getAllPeople (page) {
     return get(API_URL)
 }
 
+function getPeopleById (id) {
+    const API_URL = `${configService.apiUrlBase}${configService.endpointPeople}/${id}/`
+    return get(API_URL)
+}
+
 export { 
-    getAllPeople
+    getAllPeople,
+    getPeopleById
 }
