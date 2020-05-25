@@ -9,22 +9,20 @@
           p.is-6 {{ $t('language') }}: {{ specie.language  }}
 
       .content
-        button.button.is-dark.has-text-centered
-            span(@click="goToSpecie()") {{ $t('view_detail') }}
+        router-link.button.is-dark.has-text-centered(:to="{ name: 'specie_detail', params: { id: idDetail } }") {{ $t('view_detail') }}
 </template>
 
 <script>
+import getIdMixin from '@/mixins/getId'
 export default {
+  mixins: [getIdMixin],
   props: {
     specie: { type: Object, required: true },
     id: {required: true}
   },
-
-  methods: {
-    goToSpecie () {
-      console.log("View detail")
-      // const id = this.id + 1
-      // this.$router.push({ name: 'planet_detail', params: { id } })
+  computed: {
+    idDetail () {
+      return this.getId(this.specie.url)
     }
   }
 }

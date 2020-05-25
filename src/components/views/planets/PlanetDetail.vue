@@ -38,12 +38,11 @@
 
                         div(v-if="!planet.films.length == 0")
                             br
-                            div
-                              p.title.is-4 {{ $t('films') }}
-                              .container.results
-                                .columns.is-multiline.is-centered
-                                  .column.is-one-quarter(v-for="(f, index) in planet.films")
-                                    p.title.is-4 {{ f }}
+                            p.title.is-4 {{ $t('films') }}
+                            .container.results
+                              .columns.is-multiline.is-centered
+                                .column.is-one-quarter(v-for="(f, index) in planet.films")
+                                  films(:resident_url="f")
 
                 footer.card-footer
                     router-link.card-footer-item(:to="{ name: 'planets' }") {{ $t('return') }}

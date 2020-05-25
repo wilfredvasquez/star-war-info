@@ -9,8 +9,10 @@
 
 <script>
 import { getPlanetById } from '@/services/planets'
+import getIdMixin from '@/mixins/getId'
 
 export default {
+  mixins: [getIdMixin],
   props: {
     homeworld_url: { type: String, required: true },
   },
@@ -23,13 +25,10 @@ export default {
       }
   },
   created () {
-      const length = this.homeworld_url.toString().split("/").length
-      const id_planet = this.homeworld_url.toString().split("/")[length-2]
-      getPlanetById(id_planet)
+      this.homeworld.id = this.getId(this.homeworld_url)
+      getPlanetById(this.homeworld.id)
       .then( res => {
-        console.log(res.data)
         this.homeworld.name = res.data.name
-        this.homeworld.id = id_planet
       })
       .catch((err) => {
         console.log(err)

@@ -9,22 +9,17 @@
           p.is-6 {{ $t('birth_year') }}: {{ person.birth_year  }}
 
       .content
-        button.button.is-dark.has-text-centered
-            span(@click="goToPerson()") {{ $t('view_detail') }}
+        router-link.button.is-dark.has-text-centered(:to="{ name: 'people_detail', params: { id: idDetail } }") {{ $t('view_detail') }}
 </template>
 
 <script>
+import getIdMixin from '@/mixins/getId'
+
 export default {
+  mixins: [getIdMixin],
   props: {
     person: { type: Object, required: true },
     id: {required: true}
-  },
-
-  methods: {
-    goToPerson () {
-      const id = this.id + 1
-      this.$router.push({ name: 'people_detail', params: { id } })
-    }
   },
   computed: {
     gender () {
@@ -32,6 +27,9 @@ export default {
         return this.person.gender.toUpperCase()
       }
       return this.person.gender
+    },
+    idDetail () {
+      return this.getId(this.person.url)
     }
   }
 }

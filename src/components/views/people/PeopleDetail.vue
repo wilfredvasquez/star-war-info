@@ -54,28 +54,28 @@
                             br
                             p.title.is-4 {{ $t('species') }}
                             
-                            .columns.is-desktop
-                                .column.is-12
-                                    p.has-text-weight-bold {{ $t('species') }}
-                                    p {{ person.species }}
+                            .container.results
+                                .columns.is-multiline.is-centered
+                                  .column.is-one-quarter(v-for="(s, index) in person.species")
+                                    species(:specie_url="s")
                         
                         div(v-if="!person.vehicles.length == 0")
                             br
                             p.title.is-4 {{ $t('vehicles') }}
                             
-                            .columns.is-desktop
-                                .column.is-12
-                                    p.has-text-weight-bold {{ $t('vehicles') }}
-                                    p {{ person.vehicles }}
+                            .container.results
+                                .columns.is-multiline.is-centered
+                                  .column.is-one-quarter(v-for="(v, index) in person.vehicles")
+                                    vehicles(:vehicle_url="v")
                         
                         div(v-if="!person.starships.length == 0")
                             br
                             p.title.is-4 {{ $t('starships') }}
                             
-                            .columns.is-desktop
-                                .column.is-12
-                                    p.has-text-weight-bold {{ $t('starships') }}
-                                    p {{ person.starships }}
+                            .container.results
+                                .columns.is-multiline.is-centered
+                                  .column.is-one-quarter(v-for="(s, index) in person.starships")
+                                    starships(:starship_url="s")
 
                 
                 footer.card-footer
@@ -84,7 +84,10 @@
 
 <script>
 import { getPeopleById } from '@/services/people'
+import Species from "@/components/shared/Species"
 import Films from '@/components/shared/Films'
+import Starships from '@/components/shared/Starships'
+import Vehicles from '@/components/shared/Vehicles'
 import HomeWorld from '@/components/views/people/HomeWorld'
 import Loader from '@/components/shared/Loading.vue'
 import Notification from '@/components/shared/Notification.vue'
@@ -94,7 +97,10 @@ export default {
     Loader,
     Notification,
     HomeWorld,
-    Films
+    Films,
+    Vehicles,
+    Starships,
+    Species
   },
   data () {
     return {
@@ -112,7 +118,6 @@ export default {
     const id = this.$route.params.id
     getPeopleById(id)
       .then( res => {
-        console.log(res.data)
         this.person = res.data
       })
       .catch(() => {

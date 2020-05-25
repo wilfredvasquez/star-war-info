@@ -9,22 +9,20 @@
           p.is-6 {{ $t('class') }}: {{ starship.starship_class | capitalize }}
 
       .content
-        button.button.is-dark.has-text-centered
-            span(@click="goToStarship()") {{ $t('view_detail') }}
+        router-link.button.is-dark.has-text-centered(:to="{ name: 'starship_detail', params: { id: idDetail } }") {{ $t('view_detail') }}
 </template>
 
 <script>
+import getIdMixin from '@/mixins/getId'
 export default {
+  mixins: [getIdMixin],
   props: {
     starship: { type: Object, required: true },
     id: {required: true}
   },
-
-  methods: {
-    goToStarship () {
-      console.log("View detail")
-      // const id = this.id + 1
-      // this.$router.push({ name: 'planet_detail', params: { id } })
+  computed: {
+    idDetail () {
+      return this.getId(this.starship.url)
     }
   }
 }

@@ -9,22 +9,21 @@
           p.is-6 {{ $t('population') }}: {{ planet.population  }}
 
       .content
-        button.button.is-dark.has-text-centered
-            span(@click="goToPerson()") {{ $t('view_detail') }}
+        router-link.button.is-dark.has-text-centered(:to="{ name: 'planet_detail', params: { id: idDetail } }") {{ $t('view_detail') }}
 </template>
 
 <script>
+import getIdMixin from '@/mixins/getId'
+
 export default {
+  mixins: [getIdMixin],
   props: {
     planet: { type: Object, required: true },
     id: {required: true}
   },
-
-  methods: {
-    goToPerson () {
-      console.log("View detail")
-      const id = this.id + 1
-      this.$router.push({ name: 'planet_detail', params: { id } })
+  computed: {
+    idDetail () {
+      return this.getId(this.planet.url)
     }
   }
 }

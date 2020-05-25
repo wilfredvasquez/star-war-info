@@ -9,22 +9,20 @@
           p.is-6 {{ $t('class') }}: {{ vehicle.vehicle_class | capitalize }}
 
       .content
-        button.button.is-dark.has-text-centered
-            span(@click="goToVehicle()") {{ $t('view_detail') }}
+        router-link.button.is-dark.has-text-centered(:to="{ name: 'vehicle_detail', params: { id: idDetail } }") {{ $t('view_detail') }}
 </template>
 
 <script>
+import getIdMixin from '@/mixins/getId'
 export default {
+  mixins: [getIdMixin],
   props: {
     vehicle: { type: Object, required: true },
     id: {required: true}
   },
-
-  methods: {
-    goToVehicle () {
-      console.log("View detail")
-      // const id = this.id + 1
-      // this.$router.push({ name: 'planet_detail', params: { id } })
+  computed: {
+    idDetail () {
+      return this.getId(this.vehicle.url)
     }
   }
 }

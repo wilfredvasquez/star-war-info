@@ -7,7 +7,10 @@
 
 <script>
 import { getPeopleById } from '@/services/people'
+import getIdMixin from '@/mixins/getId'
+
 export default {
+  mixins: [getIdMixin],
   props: {
     resident_url: { type: String, required: true },
   },
@@ -20,13 +23,10 @@ export default {
       }
   },
   created (){
-    const length = this.resident_url.toString().split("/").length
-    const id_resident = this.resident_url.toString().split("/")[length-2]
-    getPeopleById(id_resident)
+    this.resident.id = this.getId(this.resident_url)
+    getPeopleById(this.resident.id)
       .then( res => {
-        console.log(res.data)
         this.resident.name = res.data.name
-        this.resident.id = id_resident
       })
       .catch(() => {
         console.log
